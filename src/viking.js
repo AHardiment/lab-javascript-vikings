@@ -45,6 +45,7 @@ class Saxon extends Soldier {
 class War {
   vikingArmy = [];
   saxonArmy = [];
+
   addViking(Viking) {
     this.vikingArmy.push(Viking);
   }
@@ -52,17 +53,40 @@ class War {
     this.saxonArmy.push(Saxon);
   }
   vikingAttack() {
-    Saxon.receiveDamage(Viking.strength);
+    const saxon =
+      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+    const viking =
+      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+
+    const saxonDamageReceived = saxon.receiveDamage(viking.strength);
+
+    // This code is not passing the unit tests but in the below method
+    // the exact same code is passing those tests
+    if (saxon.health === 0) {
+        this.saxonArmy.pop();
+      }
+    return saxonDamageReceived;
   }
   saxonAttack() {
+    const saxon =
+      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+    const viking =
+      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+
+    const vikingDamageReceived = viking.receiveDamage(saxon.strength);
+
+    if (viking.health === 0) {
+      this.vikingArmy.pop();
+    }
+    return vikingDamageReceived;
   }
   showStatus() {
     if (this.saxonArmy.length === 0) {
-        return 'Vikings have won the war of the century!';
+      return "Vikings have won the war of the century!";
     } else if (this.vikingArmy.length === 0) {
-        return 'Saxons have fought for their lives and survived another day...';
+      return "Saxons have fought for their lives and survived another day...";
     } else {
-        return 'Vikings and Saxons are still in the thick of battle.'
+      return "Vikings and Saxons are still in the thick of battle.";
     }
   }
 }
