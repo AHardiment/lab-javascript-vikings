@@ -34,7 +34,7 @@ class Viking extends Soldier {
 class Saxon extends Soldier {
   receiveDamage(damage) {
     this.health -= damage;
-    if (this.health === 0) {
+    if (this.health <= 0) {
       return `A Saxon has died in combat`;
     }
     return `A Saxon has received ${damage} points of damage`;
@@ -60,11 +60,9 @@ class War {
 
     const saxonDamageReceived = saxon.receiveDamage(viking.strength);
 
-    // This code is not passing the unit tests but in the below method
-    // the exact same code is passing those tests
-    if (saxon.health === 0) {
-        this.saxonArmy.pop();
-      }
+    if (saxon.health <= 0) {
+      this.saxonArmy.pop();
+    }
     return saxonDamageReceived;
   }
   saxonAttack() {
@@ -75,7 +73,7 @@ class War {
 
     const vikingDamageReceived = viking.receiveDamage(saxon.strength);
 
-    if (viking.health === 0) {
+    if (viking.health <= 0) {
       this.vikingArmy.pop();
     }
     return vikingDamageReceived;
